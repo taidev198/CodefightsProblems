@@ -99,34 +99,43 @@ public class Challenges {
 
 
     static int studyOrSleep(int familiarity, int hoursRemaining) {
+        if(hoursRemaining == 0) return 0;
         float unfamiliarity = 100- familiarity;
-        float bestResult = ((unfamiliarity *20)/100) + familiarity - 5;
+        float bestResult =  familiarity ;
+
         int bestHour =0;
-        int hours = 1;
-        int timeRemain = Math.abs(hoursRemaining - 8);
-        if(hoursRemaining >8 ){
-            hours =0;
-        }
+        int hours = 0;
+        if(hoursRemaining > 8)
+            bestHour = hoursRemaining - 8-1;
         float result ;
         float familiarityTmp = familiarity;
-        while(hours < 8){
+        while(familiarityTmp < 100 && hours <= 8){
+            if(hoursRemaining <= 8)
+                hours ++;
             familiarityTmp += ((unfamiliarity *20)/100);
             result =  familiarityTmp - hours * 5;
             unfamiliarity = 100-familiarityTmp;
-            if ((result == bestResult && hours ==1) || (hours > 1 && bestResult < result )){
-                bestHour = hours;
+            if ( bestResult < result ){
+                bestHour ++;
                 bestResult = result;
-            }else break;
-            timeRemain--;
-            if(timeRemain <= 0)
-                hours ++;
+            }
+            hoursRemaining--;
+
         }
         return  bestHour;
-    }
+        }
+
+        static int titleToNumber(String s) {
+            int len = s.length();
+            int res = 1;
+            for(int i=0;i <len-1;i++){
+                res *= (s.charAt(i) -'A' +1) * (26+i) ;
+            }
+            return res + (s.charAt(len-1) -'A' +1);
+        }
 
     public static void main(String...args){
-        List<Character> list = new ArrayList<>();
-        list.add('c');
+        System.out.println(titleToNumber("A"));
 
     }
 }

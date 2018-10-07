@@ -223,10 +223,44 @@ public class StringInterview1 {
     }
 
 
+    static boolean beautifulText(String inputString, int l, int r) {
+        int len = inputString.length();
+        if(len < l) return false;
+        String[] strArray = inputString.split(" ");
+        int temp = 0;
+        int speed = 1;
+        for(int i=0; i< strArray.length-1; i++){
+            temp += (strArray[i].length());
+            if (i > 0)
+            temp ++;
+            boolean isOk = true;
+            for(int j = i+1 ; j < strArray.length ; j+=speed){
+                int newLineLength = 0;
+                if(j+speed >= strArray.length){
+                    isOk = false;
+                    break;
+                }
+
+                for(int k = j ;k< j+speed ;k++){
+                    newLineLength += strArray[k].length();
+                }
+                newLineLength += (speed - 1);
+                if(newLineLength!= temp || (newLineLength <l ||  newLineLength >r)){
+                    isOk = false;
+                    break;
+                }
+            }
+            if(isOk && temp >=l &&  temp <=r)
+                return true;
+            speed ++;
+        }
+        return false;
+    }
+
     public static void main(String...args){
         //System.out.println(Integer.MAX_VALUE);
 
         //System.out.println(Arrays.toString(uncommonFromSentences("s z z z s", "s z ejt")));
-        System.out.println(classifyStrings("aca"));
+        System.out.println(beautifulText( "Look at this example of a correct text", 5, 15));
     }
 }
