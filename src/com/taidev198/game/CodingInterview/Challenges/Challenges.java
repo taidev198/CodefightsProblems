@@ -134,8 +134,32 @@ public class Challenges {
             return res + (s.charAt(len-1) -'A' +1);
         }
 
+        /**https://app.codesignal.com/challenge/iWBemn2LDkBokcR6h*/
+        static int quantumLabBooking(int[][] friends, int firstInLine, int k) {
+            int col = friends[0].length;
+            LinkedList<Integer> q = new LinkedList<>();
+            q.add(firstInLine);
+            int t = 0;
+            while (!q.isEmpty()){
+                int len = q.size();
+                for (int i = 0; i <len ; i++) {
+                    int l = q.poll();
+                    for (int j = 0; j < col; j++) {
+                        if (friends[l][j] == 1){
+                            t++;
+                            q.add(j);
+                            if (t >= k)
+                                return j;
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
+
     public static void main(String...args){
-        System.out.println(titleToNumber("A"));
+       // System.out.println(titleToNumber("A"));
+        System.out.println(quantumLabBooking(new int[][]{{1,0,0,1}, {0,1,1,0}, {1,1,0,1}, {1,0,1,1}},2 , 31));
 
     }
 }
